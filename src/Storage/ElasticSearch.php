@@ -26,10 +26,10 @@ class ElasticSearch implements StorageInterface
     {
         $this->config = $config;
 
-        if ( !$di['session']->isStarted() ) {
+        if ( !$di['session']->exists() ) {
             $di['session']->start();
         }
-        $this->sid = $di['session']->getId();;
+        $this->sid = $di['session']->getId();
 
         $factory = ClientBuilder::create();
 

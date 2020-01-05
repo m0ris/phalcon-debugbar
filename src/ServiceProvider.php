@@ -175,15 +175,15 @@ class ServiceProvider extends Injectable {
         $request = $this->di['request'];
 
         if ( $config->get('enabled')) {
-            $white_lists = (array)$config->get('white_lists');
+            $white_lists = $config->get('white_lists')->toArray();
             if ( !empty($white_lists) && !in_array($this->di['request']->getClientAddress(true),$white_lists)) {
                 $debugbar->disable();
                 return;
             }
 
-            $router->handle();
-            $deny_routes  = (array)$config->get('deny_routes');
-            $allow_routes = (array)$config->get('allow_routes');
+            $router->handle($_SERVER['REQUEST_URI']);
+            $deny_routes  = $config->get('deny_routes')->toArray();
+            $allow_routes = $config->get('allow_routes')->toArray();
 
             $current = $router->getMatchedRoute();
 

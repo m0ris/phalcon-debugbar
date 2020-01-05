@@ -22,7 +22,7 @@ class Filesystem implements  StorageInterface
 	 */
 	public function __construct($dirname,$di)
 	{
-        if ( !$di['session']->isStarted() ) {
+        if ( !$di['session']->exists() ) {
             $di['session']->start();
         }
         $sid = $di['session']->getId();

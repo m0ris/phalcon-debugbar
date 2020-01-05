@@ -18,10 +18,10 @@ class MongoDB implements StorageInterface
 
     public function __construct($di, $connection, $db, $collection, $options, $dirveropts)
     {
-        if (!$di['session']->isStarted()) {
+        if (!$di['session']->exists()) {
             $di['session']->start();
         }
-        $this->sid = $di['session']->getId();;
+        $this->sid = $di['session']->getId();
         $client = new \MongoDB\Client($connection, (array)$options, (array)$dirveropts);
         $this->collection = $client->{$db}->{$collection};
     }

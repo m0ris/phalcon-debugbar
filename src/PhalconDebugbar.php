@@ -17,10 +17,9 @@ use DebugBar\DataCollector\RequestDataCollector;
 use DebugBar\DataCollector\TimeDataCollector;
 use DebugBar\DebugBar;
 use Exception;
-use Phalcon\Cache\Backend;
-use Phalcon\Cache\Multiple;
-use Phalcon\Db\Adapter;
-use Phalcon\Db\Adapter\Pdo;
+use Phalcon\Cache;
+use Phalcon\Db\Adapter\AbstractAdapter as Adapter;
+use Phalcon\Db\Adapter\Pdo\AbstractPdo as Pdo;
 use Phalcon\DI;
 use Phalcon\Events\Event;
 use Phalcon\Events\Manager;
@@ -273,7 +272,7 @@ class PhalconDebugbar extends DebugBar {
             $this->addCollector($collector);
         }
         $backend = $this->di->get($cacheService);
-        if ( $backend instanceof Multiple || $backend instanceof Backend ) {
+        if ( $backend instanceof Cache ) {
             if ($this->shouldCollect('cache',false)) {
                 $this->di->remove($cacheService);
                 $self = $this;

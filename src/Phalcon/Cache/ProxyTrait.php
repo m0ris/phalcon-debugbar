@@ -30,15 +30,15 @@ trait ProxyTrait {
 		$parameters = isset($parameters[1])?$parameters[1]:array();
 		if ( is_callable(array($this->_backend,$name) ) ) {
 			$value = call_user_func_array(array($this->_backend,$name),$parameters);
-			$frontend = $this->_backend->getFrontend();
-			if ( is_object($frontend) && $frontend instanceof Base64 ) {
-				if ( $name=='save' ) {
-					$parameters[1] = '[BINARY DATA]';
-				}
-				if ( $name=='get' ) {
-					$returned =  '[BINARY DATA]';
-				}
-			}
+//			$frontend = $this->_backend->getFrontend();
+//			if ( is_object($frontend) && $frontend instanceof Base64 ) {
+//				if ( $name=='save' ) {
+//					$parameters[1] = '[BINARY DATA]';
+//				}
+//				if ( $name=='get' ) {
+//					$returned =  '[BINARY DATA]';
+//				}
+//			}
 			if ( $name=='save' && is_object($parameters[1]) ) {
 				$parameters[1] = 'Object Of : '. get_class($parameters[1]);
 			}
@@ -114,7 +114,7 @@ trait ProxyTrait {
 		return $this->call('save', array($keyName, $content, $lifetime, $stopBuffer));
 	}
 
-	public function delete($keyName)
+	public function delete($keyName): bool
 	{
 		return $this->call('delete',array($keyName));
 	}
